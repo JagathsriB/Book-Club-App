@@ -1,0 +1,52 @@
+// src/pages/RegisterPage.js
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../features/auth/authSlice';
+
+const RegisterPage = () => {
+  const [formData, setFormData] = useState({ username: '', password: '' });
+  const { username, password } = formData;
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isAuthenticated, status, error } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/my-collection');
+    }
+  }, [isAuthenticated, navigate]);
+
+  const onChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    dispatch(register({ username, password }));
+  };
+
+  return (
+    <div className="row justify-content-center">
+      <div className="col-md-6">
+        <h2 className="text-center mb-4">Register</h2>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <form onSubmit={onSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Username</label>
+            <input type="text" name="username" value={username} onChange={onChange} className="form-control" required />
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input type="password" name="password" value={password} onChange={onChange} className="form-control" required minLength="6" />
+          </div>
+          <button type="submit" className="btn btn-primary w-100" disabled={status === 'loading'}>
+            {status === 'loading' ? 'Registering...' : 'Register'}
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default RegisterPage;
