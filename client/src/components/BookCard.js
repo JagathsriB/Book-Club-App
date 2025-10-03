@@ -11,7 +11,7 @@ const StarRating = ({ rating }) => {
 
 // We add a 'layout' prop, with 'vertical' as the default value
 const BookCard = ({ book, onEdit, onDelete, showActions = false, layout = 'vertical' }) => {
-  const serverUrl = 'http://localhost:5000';
+  const serverUrl = 'https://book-club-server-v3ca.onrender.com';
 
    // --- HORIZONTAL LAYOUT ---
   if (layout === 'horizontal') {

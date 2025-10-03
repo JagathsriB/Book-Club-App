@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/auth';
+const API_URL = 'https://book-club-server-v3ca.onrender.com';
 const user = JSON.parse(localStorage.getItem('user'));
 const token = localStorage.getItem('token');
 
